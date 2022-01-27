@@ -1,3 +1,4 @@
+import 'package:barcode_scanner/Screens/welcome_screen_qrcode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Screens/barcode_scanning_screen.dart';
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
         title: title,
         theme: ThemeData(
           primaryColor: Colors.red,
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: const Color(0XFFFFF7F6),
         ),
-        home: BarcodeScanPage(),
+        home: const WelcometoQrWorld(),
       );
 }
