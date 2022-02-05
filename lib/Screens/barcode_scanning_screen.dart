@@ -32,7 +32,7 @@ class _BarcodeScanPageState extends State<BarcodeScanPage> {
               const SizedBox(height: 8),
               Text(
                 '$barcode',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
