@@ -1,4 +1,6 @@
 import 'package:barcode_scanner/Screens/add_cutomers_contacts.dart';
+import 'package:barcode_scanner/Screens/cash_in_cash_out.dart';
+import 'package:barcode_scanner/Screens/cashbook.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +11,9 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +26,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.red,
         ),
-        home: const AddCustomerContacts(),
+        home: const CashInCashOut(),
       );
 }
