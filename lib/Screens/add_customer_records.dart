@@ -1,21 +1,21 @@
-import 'package:barcode_scanner/Widgets/reuseableButton.dart';
-
+import 'package:barcode_scanner/Screens/paisay_liye_diye.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:barcode_scanner/Widgets/reusable_card.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../Widgets/reusable_card.dart';
+import '../Widgets/reuseableButton.dart';
+import '../config/app_constants.dart';
 import 'cash_inCash_out.dart';
 
-class CaShBookRegister extends StatefulWidget {
-  const CaShBookRegister({Key? key}) : super(key: key);
+class AddCustomerRecords extends StatefulWidget {
+  const AddCustomerRecords({Key? key}) : super(key: key);
 
   @override
-  _CaShBookRegisterState createState() => _CaShBookRegisterState();
+  State<AddCustomerRecords> createState() => _AddCustomerRecordsState();
 }
 
-class _CaShBookRegisterState extends State<CaShBookRegister> {
+class _AddCustomerRecordsState extends State<AddCustomerRecords> {
   addMoney(snapshot, String name) {
     int cash = 0;
     for (var item in snapshot.data!.docs) {
@@ -25,7 +25,6 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
     return cash.toString();
   }
 
-  @override
   final _firestore = FirebaseFirestore.instance;
 
   DateTime date = DateTime.now();
@@ -38,7 +37,7 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
       resizeToAvoidBottomInset: true,
       body: StreamBuilder(
         stream: _firestore
-            .collection('CASHINCASHOUT')
+            .collection('CUSTOMERKHATA')
             .orderBy('DATE', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -63,7 +62,7 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
               displayedDataCell.add(
                 DataCell(
                   Text(
-                    item['CASHIN'].toString(),
+                    item['DIYE'].toString(),
                     style: const TextStyle(color: Colors.green),
                   ),
                 ),
@@ -71,7 +70,7 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
               displayedDataCell.add(
                 DataCell(
                   Text(
-                    item['CASHOUT'].toString(),
+                    item['LIYE'].toString(),
                     style: const TextStyle(color: Colors.red),
                   ),
                 ),
@@ -81,8 +80,8 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(
                     height: 16.0,
@@ -96,7 +95,7 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
                               textcolour: Colors.white,
                               buttonColour: Colors.green,
                               text:
-                                  "Cash in hand \n ${addMoney(snapshot, 'CASHIN') == '0' ? '' : addMoney(snapshot, 'CASHIN')}"),
+                                  "Maine Lainy Hain \n ${addMoney(snapshot, 'DIYE') == '0' ? '' : addMoney(snapshot, 'DIYE')}"),
                         ),
                         const SizedBox(
                           width: 8.0,
@@ -106,12 +105,13 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
                             buttonColour: Colors.red,
                             textcolour: Colors.white,
                             text:
-                                "Today's Balance \n ${addMoney(snapshot, 'CASHOUT') == '0' ? '' : addMoney(snapshot, 'CASHOUT')}",
+                                "Maine Dainy hain \n ${addMoney(snapshot, 'LIYE') == '0' ? '' : addMoney(snapshot, 'LIYE')}",
                           ),
                         ),
                       ],
                     ),
                   ),
+                  const Spacer(),
                   SizedBox(
                     height: Get.size.height * 0.74,
                     child: Scrollbar(
@@ -131,12 +131,12 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Cash In',
+                                    'Maine Diye',
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Cash Out',
+                                    'Maine Liye',
                                   ),
                                 ),
                               ],
@@ -163,12 +163,12 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
                         Expanded(
                           child: ReusableButton(
                             color: Colors.red,
-                            text: "Add Enteries",
+                            text: "Liye or Diye",
                             onpress: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const CashInCashOut(),
+                                  builder: (context) => const PaisayLiyeDiye(),
                                 ),
                               );
                             },

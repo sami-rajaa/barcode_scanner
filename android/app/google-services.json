@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "122454566200",
+    "project_id": "easy-khata-b437c",
+    "storage_bucket": "easy-khata-b437c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122454566200:android:64021da7be7d06f5898dcd",
+        "android_client_info": {
+          "package_name": "com.example.barcode_scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122454566200-gq1t30to6t9i6nvrk0ggmoa5vh29q3tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADNneJLXpR4SyT2V39EecceRKAJr3P6o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122454566200-gq1t30to6t9i6nvrk0ggmoa5vh29q3tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

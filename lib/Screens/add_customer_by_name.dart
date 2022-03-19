@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/reuseableButton.dart';
@@ -10,6 +11,9 @@ class AddCustomerByName extends StatefulWidget {
 }
 
 class _AddCustomerByNameState extends State<AddCustomerByName> {
+  final _firestore = FirebaseFirestore.instance;
+  late String customerName;
+  late String custommerContact;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,23 +27,35 @@ class _AddCustomerByNameState extends State<AddCustomerByName> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  onChanged: (value) {
+                    customerName = value;
+                  },
+                  decoration: const InputDecoration(
                       labelText: "Add Customer's name",
                       floatingLabelBehavior: FloatingLabelBehavior.always),
                 ),
                 const SizedBox(
                   height: 26.0,
                 ),
-                const TextField(
+                TextField(
+                  onChanged: (value) {
+                    custommerContact = value;
+                  },
                   keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Add Customer's contact No (optional)",
                       floatingLabelBehavior: FloatingLabelBehavior.auto),
                 ),
                 const Spacer(),
                 ReusableButton(
                   text: 'Next',
+                  onpress: () {
+                    _firestore.collection('ADDCUSTOMERCONTACTS').add({
+                      'CUSTOMERNAME': customerName,
+                      'CUSTOMERCONTACT': custommerContact,
+                    });
+                  },
                 ),
               ],
             ),
