@@ -1,31 +1,31 @@
-import 'package:flutter/material.dart';
-
 import 'package:barcode_scanner/Widgets/reuseableButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PaisayLiyeDiye extends StatefulWidget {
-  const PaisayLiyeDiye({Key? key}) : super(key: key);
+import '../config/app_constants.dart';
+
+class CashInCashOut extends StatefulWidget {
+  const CashInCashOut({Key? key}) : super(key: key);
 
   @override
-  _PaisayLiyeDiyeState createState() => _PaisayLiyeDiyeState();
+  _CashInCashOutState createState() => _CashInCashOutState();
 }
 
-class _PaisayLiyeDiyeState extends State<PaisayLiyeDiye> {
-  final _firestore = FirebaseFirestore.instance;
+class _CashInCashOutState extends State<CashInCashOut> {
+  // final _firestore = FirebaseFirestore.instance;
   DateTime date = DateTime.now();
   late var formattedDate = DateFormat('d-MMM-yy').format(date);
-  late String paisayDiye;
-  late String paisayLiye;
-  late String dateofKhata;
+  late String amountCashout;
+  late String detailCashOut;
+  late String dateCashOut;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Customer Khata"),
+        title: const Text("Cash Out"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -34,17 +34,16 @@ class _PaisayLiyeDiyeState extends State<PaisayLiyeDiye> {
           children: [
             TextField(
               onChanged: (value) {
-                paisayDiye = value;
+                amountCashout = value;
               },
               keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(labelText: "Maine Diye"),
+              decoration: const InputDecoration(labelText: "Cash in"),
             ),
             TextField(
               onChanged: (value) {
-                paisayLiye = value;
+                detailCashOut = value;
               },
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(labelText: "Maine Liye"),
+              decoration: const InputDecoration(labelText: "Cash out"),
             ),
             const SizedBox(
               height: 28.0,
@@ -79,10 +78,10 @@ class _PaisayLiyeDiyeState extends State<PaisayLiyeDiye> {
               color: Colors.green,
               text: 'Save',
               onpress: () async {
-                await _firestore.collection('CUSTOMERKHATA').add(
+                await firestore.collection('CASHINCASHOUT').add(
                   {
-                    'DIYE': paisayDiye,
-                    'LIYE': paisayLiye,
+                    'CASHIN': amountCashout,
+                    'CASHOUT': detailCashOut,
                     'DATE': formattedDate
                   },
                 );

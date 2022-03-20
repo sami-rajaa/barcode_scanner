@@ -1,7 +1,7 @@
 import 'package:barcode_scanner/Screens/add_customer_by_name.dart';
-import 'package:barcode_scanner/Screens/add_customer_records.dart';
+import 'package:barcode_scanner/Screens/add_customer_khata.dart';
 import 'package:barcode_scanner/Screens/add_cutomers_contacts.dart';
-import 'package:barcode_scanner/Screens/cash_inCash_out.dart';
+import 'package:barcode_scanner/Screens/daily_cash_inCash_out_shopkeeper.dart';
 import 'package:barcode_scanner/Screens/cashbook.dart';
 import 'package:barcode_scanner/Screens/display_contacts_from_directory.dart';
 import 'package:barcode_scanner/controller/cash_controller.dart';
@@ -40,6 +40,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.red,
         ),
-        home: const AddCustomerRecords(),
+        home: const AddCustomerContacts(),
       );
 }

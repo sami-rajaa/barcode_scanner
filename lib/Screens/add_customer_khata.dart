@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/Screens/paisay_liye_diye.dart';
+import 'package:barcode_scanner/Screens/customers_loan_give_take.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../Widgets/reusable_card.dart';
 import '../Widgets/reuseableButton.dart';
 import '../config/app_constants.dart';
-import 'cash_inCash_out.dart';
+import 'daily_cash_inCash_out_shopkeeper.dart';
 
 class AddCustomerRecords extends StatefulWidget {
   const AddCustomerRecords({Key? key}) : super(key: key);
@@ -25,8 +25,6 @@ class _AddCustomerRecordsState extends State<AddCustomerRecords> {
     return cash.toString();
   }
 
-  final _firestore = FirebaseFirestore.instance;
-
   DateTime date = DateTime.now();
   late var formattedDate = DateFormat('d-MMM-yy').format(date);
   @override
@@ -36,7 +34,7 @@ class _AddCustomerRecordsState extends State<AddCustomerRecords> {
       extendBody: true,
       resizeToAvoidBottomInset: true,
       body: StreamBuilder(
-        stream: _firestore
+        stream: firestore
             .collection('CUSTOMERKHATA')
             .orderBy('DATE', descending: true)
             .snapshots(),

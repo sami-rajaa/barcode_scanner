@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\Screens\\add_customer_records.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\Screens\\add_customer_records.dart"
+        }
+    ]
+}

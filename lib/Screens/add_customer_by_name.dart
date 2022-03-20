@@ -1,7 +1,11 @@
+import 'package:barcode_scanner/Screens/customers_loan_give_take.dart';
+import 'package:barcode_scanner/model/customer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../Widgets/reuseableButton.dart';
+import '../config/app_constants.dart';
 
 class AddCustomerByName extends StatefulWidget {
   const AddCustomerByName({Key? key}) : super(key: key);
@@ -11,9 +15,8 @@ class AddCustomerByName extends StatefulWidget {
 }
 
 class _AddCustomerByNameState extends State<AddCustomerByName> {
-  final _firestore = FirebaseFirestore.instance;
   late String customerName;
-  late String custommerContact;
+  late String customerContact;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +43,7 @@ class _AddCustomerByNameState extends State<AddCustomerByName> {
                 ),
                 TextField(
                   onChanged: (value) {
-                    custommerContact = value;
+                    customerContact = value;
                   },
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
@@ -50,11 +53,13 @@ class _AddCustomerByNameState extends State<AddCustomerByName> {
                 const Spacer(),
                 ReusableButton(
                   text: 'Next',
-                  onpress: () {
-                    _firestore.collection('ADDCUSTOMERCONTACTS').add({
-                      'CUSTOMERNAME': customerName,
-                      'CUSTOMERCONTACT': custommerContact,
-                    });
+                  onpress: () async {
+                    await firestore.collection('ADDCUSTOMERCONTACTS').add(
+                        CustomerModel(
+                            name: customerName,
+                            phoneNo: customerContact,
+                            cashRecords: []).toMap());
+                    Get.to(() => PaisayLiyeDiye());
                   },
                 ),
               ],

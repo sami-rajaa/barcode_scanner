@@ -1,7 +1,15 @@
+import 'package:barcode_scanner/Screens/cashbook.dart';
 import 'package:barcode_scanner/Screens/display_contacts_from_directory.dart';
 import 'package:barcode_scanner/Widgets/reusable_card.dart';
+import 'package:barcode_scanner/model/customer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../Widgets/reuseableButton.dart';
+import '../config/app_constants.dart';
+import 'customers_loan_give_take.dart';
 
 class AddCustomerContacts extends StatefulWidget {
   const AddCustomerContacts({Key? key}) : super(key: key);
@@ -11,10 +19,23 @@ class AddCustomerContacts extends StatefulWidget {
 }
 
 class _AddCustomerContactsState extends State<AddCustomerContacts> {
+  final _firestore = FirebaseFirestore.instance;
+
   Color? _inactiveColorfor_tobegiven = Colors.red[100];
   Color? _inactiveTextColorfor_tobegiven = Colors.red;
   Color? _inactiveColorfor_tobereceived = Colors.green[100];
   Color? _inactiveTextColorfor_tobereceived = Colors.green;
+
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    CaShBookRegister(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +106,71 @@ class _AddCustomerContactsState extends State<AddCustomerContacts> {
                 ],
               ),
             ),
+            StreamBuilder(
+              stream: firestore.collection('ADDCUSTOMERCONTACTS').snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Loading");
+                }
+
+                if (snapshot.hasData) {
+                  var data = snapshot.data!.docs
+                      .map((e) => CustomerModel.fromSnapshot(e))
+                      .toList();
+
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: Get.size.height * 0.74,
+                          child: ListView(shrinkWrap: true, children: [
+                            FittedBox(
+                              child: ListView.builder(
+                                  itemCount: data.length,
+                                  itemBuilder: (context, index) => ListTile(
+                                        title: Text(data[index].name),
+                                      )),
+                            ),
+                          ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ReusableButton(
+                                  color: Colors.red,
+                                  text: "Liye or Diye",
+                                  onpress: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PaisayLiyeDiye(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return const CircularProgressIndicator();
+              },
+            )
           ],
         ),
       ),
@@ -112,6 +198,8 @@ class _AddCustomerContactsState extends State<AddCustomerContacts> {
             label: 'Account',
           ),
         ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         selectedItemColor: Colors.black,
       ),
     );

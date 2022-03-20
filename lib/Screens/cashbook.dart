@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'cash_inCash_out.dart';
+import '../config/app_constants.dart';
+import 'daily_cash_inCash_out_shopkeeper.dart';
 
 class CaShBookRegister extends StatefulWidget {
   const CaShBookRegister({Key? key}) : super(key: key);
@@ -25,9 +26,6 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
     return cash.toString();
   }
 
-  @override
-  final _firestore = FirebaseFirestore.instance;
-
   DateTime date = DateTime.now();
   late var formattedDate = DateFormat('d-MMM-yy').format(date);
   @override
@@ -37,7 +35,7 @@ class _CaShBookRegisterState extends State<CaShBookRegister> {
       extendBody: true,
       resizeToAvoidBottomInset: true,
       body: StreamBuilder(
-        stream: _firestore
+        stream: firestore
             .collection('CASHINCASHOUT')
             .orderBy('DATE', descending: true)
             .snapshots(),
